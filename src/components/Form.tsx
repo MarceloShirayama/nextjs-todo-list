@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Task } from "../pages/api/core/models/Task";
+import { Task } from "../lib/core/models/Task";
 import { Button } from "./Button";
 import { Input } from "./Input";
 

@@ -4,7 +4,7 @@ import { Button } from "../components/Button";
 import { Form } from "../components/Form";
 import { Layout } from "../components/Layout";
 import { Table } from "../components/Table";
-import { Task } from "./api/core/models/Task";
+import { Task } from "../lib/core/models/Task";
 
 const Home: NextPage = () => {
   const [tasks, setTasks] = useState<Task[]>([]);

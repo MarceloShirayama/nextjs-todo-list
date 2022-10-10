@@ -1,4 +1,4 @@
-import { Task } from "../pages/api/core/models/Task";
+import { Task } from "../lib/core/models/Task";
 import { EditIcon, TrashIcon } from "./Icons";
 
 type Props = {
