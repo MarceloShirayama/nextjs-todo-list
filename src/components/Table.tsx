@@ -31,8 +31,8 @@ export function Table({ tasks, selectedTask, deleteTask, toogleDone }: Props) {
           onClick={() => toogleDone(task)}
           className={
             task.getDone()
-              ? "text-red-400 text-center py-4"
-              : "text-center py-4"
+              ? "text-red-400 text-center py-4 cursor-pointer"
+              : "text-center py-4 cursor-pointer"
           }
         >
           {task.getDescription()}
