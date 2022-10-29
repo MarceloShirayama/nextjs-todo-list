@@ -33,15 +33,12 @@ export default async function handler(
     }
 
     case "DELETE": {
-      const { id } = req.query;
-      if (id) {
-        try {
-          await deleteTasksDone();
-          return res.status(200).json({ message: "OK" });
-        } catch (e) {
-          console.error("Request error", e);
-          res.status(500).json({ error: "Error deleting tasks done." });
-        }
+      try {
+        await deleteTasksDone();
+        return res.status(200).json({ message: "OK" });
+      } catch (e) {
+        console.error("Request error", e);
+        res.status(500).json({ error: "Error deleting tasks done." });
       }
       break;
     }
