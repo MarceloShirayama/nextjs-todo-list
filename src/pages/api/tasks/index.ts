@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { createTask, getTasks } from "../../../lib/tasks";
+import { createTask, deleteTasksDone, getTasks } from "../../../lib/tasks";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,7 +9,7 @@ export default async function handler(
   const { method } = req;
 
   switch (method) {
-    case "GET":
+    case "GET": {
       try {
         const tasks = await getTasks();
         return res.status(200).json({ data: tasks });
@@ -18,8 +18,9 @@ export default async function handler(
         res.status(500).json({ error: "Error fetching tasks" });
       }
       break;
+    }
 
-    case "POST":
+    case "POST": {
       try {
         const { description, quantity } = req.body;
         const task = await createTask(description, quantity);
@@ -29,6 +30,21 @@ export default async function handler(
         res.status(500).json({ error: "Error creating task" });
       }
       break;
+    }
+
+    case "DELETE": {
+      const { id } = req.query;
+      if (id) {
+        try {
+          await deleteTasksDone();
+          return res.status(200).json({ message: "OK" });
+        } catch (e) {
+          console.error("Request error", e);
+          res.status(500).json({ error: "Error deleting tasks done." });
+        }
+      }
+      break;
+    }
 
     default:
       res.setHeader("Allow", ["GET"]);

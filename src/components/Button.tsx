@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, DetailedHTMLProps, ReactNode } from "react";
 
 type Props = {
   children: ReactNode;
-  color?: "green" | "blue" | "zinc";
+  color?: "green" | "blue" | "zinc" | "red";
   className?: string;
   // onClick?: () => void;
 } & DetailedHTMLProps<
@@ -16,6 +16,8 @@ export function Button({ children, color, className, ...props }: Props) {
       ? "bg-green-700"
       : color === "blue"
       ? "bg-cyan-700"
+      : color === "red"
+      ? "bg-red-700"
       : "bg-zinc-700";
 
   const hover =
@@ -23,6 +25,8 @@ export function Button({ children, color, className, ...props }: Props) {
       ? "hover:bg-green-500"
       : color === "blue"
       ? "hover:bg-cyan-500"
+      : color === "red"
+      ? "hover:bg-red-500"
       : "hover:bg-zinc-500";
 
   const focus =
@@ -30,6 +34,8 @@ export function Button({ children, color, className, ...props }: Props) {
       ? "focus:bg-green-500"
       : color === "blue"
       ? "focus:bg-cyan-500"
+      : color === "red"
+      ? "focus:bg-red-500"
       : "focus:bg-zinc-500";
 
   return (

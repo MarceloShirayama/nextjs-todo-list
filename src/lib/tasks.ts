@@ -60,3 +60,12 @@ export async function deleteTask(taskId: number) {
   });
   return deletedTask;
 }
+
+export async function deleteTasksDone() {
+  const deletedTasks = await prisma.task.deleteMany({
+    where: {
+      done: true,
+    },
+  });
+  return deletedTasks;
+}

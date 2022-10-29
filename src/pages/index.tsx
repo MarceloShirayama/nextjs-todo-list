@@ -46,6 +46,13 @@ const Home: NextPage = () => {
     getTasks();
   }
 
+  async function deleteTasksDone() {
+    await fetch("api/tasks", {
+      method: "DELETE",
+    });
+    getTasks();
+  }
+
   async function saveTask(task: Task) {
     const newTasks = [...tasks];
     let data;
@@ -108,7 +115,10 @@ const Home: NextPage = () => {
       <Layout title="Lista de Tarefas">
         {visible === "table" && (
           <>
-            <div className="flex justify-end">
+            <div className="flex justify-between">
+              <Button className="mb-4" color="red" onClick={deleteTasksDone}>
+                Excluir realizadas
+              </Button>
               <Button className="mb-4" color="green" onClick={newTask}>
                 Nova tarefa
               </Button>
