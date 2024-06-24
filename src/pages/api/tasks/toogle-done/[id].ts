@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { deleteTask, toogleDone } from "../../../../lib/tasks";
+import { deleteTask, toggleDone } from "../../../../lib/tasks";
 
 export default async function handler(
   req: NextApiRequest,
@@ -12,7 +12,7 @@ export default async function handler(
       const { id } = req.query;
       if (id) {
         try {
-          await toogleDone(Number(id));
+          await toggleDone(Number(id));
           return res.status(200).json({ message: "OK" });
         } catch (e) {
           console.error("Request error", e);

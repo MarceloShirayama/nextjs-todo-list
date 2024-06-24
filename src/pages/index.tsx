@@ -99,7 +99,7 @@ const Home: NextPage = () => {
     const taskToChange = tasks.find((task) => task.getId() === id);
     const newTasks = [...tasks];
     if (taskToChange) {
-      taskToChange.toogleDone();
+      taskToChange.toggleDone();
       setTasks(newTasks);
     }
   }

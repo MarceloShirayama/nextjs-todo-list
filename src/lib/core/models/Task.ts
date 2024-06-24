@@ -52,7 +52,7 @@ export class Task {
     return this.done;
   }
 
-  toogleDone() {
+  toggleDone() {
     this.done = !this.done;
   }
 }

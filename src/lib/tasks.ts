@@ -1,21 +1,18 @@
-import prisma from "./prisma";
+import { tasks } from "./core/data";
+import { Task } from "./core/models/Task";
 
 export async function getTasks() {
-  const tasks = await prisma.task.findMany();
-
   return tasks;
 }
 
 export async function createTask(description: string, quantity: number) {
-  const task = await prisma.task.create({
-    data: {
-      description,
-      quantity,
-      done: false,
-    },
-  });
-
-  return task;
+  const id = tasks.length + 1;
+  const newTask = new Task({
+    id,
+    description,
+    quantity,
+  })
+  tasks.push(newTask);
 }
 
 type DataUpdate = {
@@ -24,48 +21,35 @@ type DataUpdate = {
 };
 
 export async function updateTask(taskId: number, data: DataUpdate) {
-  const updateTask = await prisma.task.update({
-    where: {
-      id: taskId,
-    },
-    data: data,
-  });
-
-  return updateTask;
+  const task = tasks.find((task) => task.getId() === taskId);
+  if (task) {
+    task.setDescription(data.description);
+    task.setQuantity(data.quantity);
+  }
+  // change tasks array here
+  const updateTask = new Task({
+    id: taskId,
+    description: data.description,
+    quantity: data.quantity,
+    done: task?.getDone() || false,
+  })
 }
 
-export async function toogleDone(taskId: number) {
-  const task = await prisma.task.findUnique({
-    where: {
-      id: taskId,
-    },
-  });
-  const updateTask = await prisma.task.update({
-    where: {
-      id: taskId,
-    },
-    data: {
-      done: !task?.done,
-    },
-  });
-
-  return updateTask;
+export async function toggleDone(taskId: number) {
+  const task = tasks.find((task) => task.getId() === taskId);
+  if (task) {
+    task.toggleDone();
+  }
 }
 
 export async function deleteTask(taskId: number) {
-  const deletedTask = await prisma.task.delete({
-    where: {
-      id: taskId,
-    },
-  });
-  return deletedTask;
+  const task = tasks.find((task) => task.getId() === taskId);
+  if (task) {
+    tasks.splice(tasks.indexOf(task), 1);
+  }
 }
 
 export async function deleteTasksDone() {
-  const deletedTasks = await prisma.task.deleteMany({
-    where: {
-      done: true,
-    },
-  });
-  return deletedTasks;
+  const tasksDone = tasks.filter((task) => task.getDone());
+  tasks.splice(0, tasksDone.length);
 }
